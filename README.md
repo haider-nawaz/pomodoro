@@ -1,16 +1,12 @@
-# pomodoro
+# Pomodoro - Focus Tracker App (developed in Flutter)
 
-A new Flutter project.
+
+A time tracker app developed in Flutter. It includes minimal design, clock animation, permision handling, local notifications.
+
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Get the app from Play Store: https://play.google.com/store/apps/details?id=com.team.pomodoro
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![  pomodoro](https://github.com/haider-nawaz/pomodoro/assets/117274118/6a077d4d-5a4e-45cd-a43d-d8d3f693e035)
