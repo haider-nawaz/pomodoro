@@ -48,6 +48,17 @@ void main() async {
 
   if (box.isEmpty) {
     print("No user");
+    // box.put(
+    //     'user',
+    //     User(
+    //       username: "User",
+    //       firstTimeUser: true,
+    //       totalPomos: 0,
+    //       todaysPomos: 0,
+    //       todayFocusHours: 0,
+    //       netFocusHours: 0,
+    //       longestStreak: 0,
+    //     ));
   } else {
     print(box.get('user'));
   }

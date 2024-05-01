@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_dnd/flutter_dnd.dart';
 import 'package:get/get.dart';
+import 'package:marquee/marquee.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pomodoro/Views/analytics_view.dart';
 import 'package:pomodoro/Views/pomo_view.dart';
@@ -62,7 +63,7 @@ class _HomeViewState extends State<HomeView> {
                           child: headerWidget(pomoController),
                         ),
                         const SizedBox(
-                          height: 25,
+                          height: 20,
                         ),
                         focusTimesWidget(context, pomoController),
                         const SizedBox(
@@ -105,23 +106,27 @@ class _HomeViewState extends State<HomeView> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(
+              height: 12,
+            ),
             Text(
-              "Hello, ${pomoController.user.username}",
+              "hello, ${pomoController.user.username} 👋",
               style: const TextStyle(
                 fontFamily: "Inter",
                 fontSize: 35,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w800,
               ),
             ).animate().fadeIn().moveX(),
-            Text(
-              "${pomoController.getCurrentDay()} - Get some work done!",
-              style: const TextStyle(
-                fontFamily: "Inter",
-                fontSize: 14,
-                color: Colors.black54,
-                fontWeight: FontWeight.normal,
-              ),
-            ).animate().fadeIn(),
+            // Text(
+            //   // text:
+            //   "It's ${pomoController.getCurrentDay()}, ready to get some work done?",
+            //   style: const TextStyle(
+            //     fontFamily: "Inter",
+            //     fontSize: 14,
+            //     color: Colors.black54,
+            //     fontWeight: FontWeight.normal,
+            //   ),
+            // ),
           ],
         ),
         //const Spacer(),

@@ -21,7 +21,16 @@ class PomoController extends GetxController {
   var focusSessions = Hive.box<List>('FocusSessions');
 
   Future<void> refreshUser() async {
-    user = Hive.box<User>('User').get('user')!;
+    user = Hive.box<User>('User').get('user') ??
+        User(
+          username: "User",
+          firstTimeUser: true,
+          totalPomos: 0,
+          todaysPomos: 0,
+          todayFocusHours: 0,
+          netFocusHours: 0,
+          longestStreak: 0,
+        );
     calculateFocusHours();
     print(user);
   }
