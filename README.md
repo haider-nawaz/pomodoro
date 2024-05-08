@@ -12,4 +12,4 @@ A time tracker app developed in Flutter. It includes minimal design, clock anima
 ### In case above doesn't works, get the APK from: https://drive.google.com/file/d/1-AVlOLBHcLoLQIUhp08keV2lv3gytH72/view?usp=sharing 
 
 
-![  pomodoro](https://github.com/haider-nawaz/pomodoro/assets/117274118/6a077d4d-5a4e-45cd-a43d-d8d3f693e035)
+![Shots create mockups (7)](https://github.com/haider-nawaz/pomodoro/assets/117274118/14a7f96a-8293-4fac-9242-c74a51ffb43f)
