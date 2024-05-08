@@ -4,6 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dnd/flutter_dnd.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -232,14 +233,16 @@ class PomoController extends GetxController {
                       //width: Get.size.width,
                       width: Get.size.width * 0.9,
                       decoration: BoxDecoration(
-                        color: e.value[1].withOpacity(0.1),
+                        color: Theme.of(Get.context!)
+                            .colorScheme
+                            .secondaryContainer,
                         borderRadius: BorderRadius.circular(10),
-                        border: currFocusChip.value == e.key
-                            ? Border.all(
-                                color: e.value[1],
-                                width: 1,
-                              )
-                            : null,
+                        // border: currFocusChip.value == e.key
+                        //     ? Border.all(
+                        //         color: e.value[1],
+                        //         width: 1,
+                        //       )
+                        //     : null,
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -248,14 +251,18 @@ class PomoController extends GetxController {
                           children: [
                             Icon(
                               e.value[0],
-                              color: e.value[1],
+                              color: Theme.of(Get.context!)
+                                  .colorScheme
+                                  .onSecondaryContainer,
                             ),
                             const SizedBox(width: 5),
                             Text(
                               e.key,
                               style: TextStyle(
                                 fontSize: 16,
-                                color: e.value[1],
+                                color: Theme.of(Get.context!)
+                                    .colorScheme
+                                    .onSecondaryContainer,
                               ),
                             ),
                             const Spacer(),
@@ -263,7 +270,9 @@ class PomoController extends GetxController {
                               currFocusChip.value == e.key
                                   ? Icons.check
                                   : Icons.arrow_forward_ios,
-                              color: e.value[1],
+                              color: Theme.of(Get.context!)
+                                  .colorScheme
+                                  .onSecondaryContainer,
                             ),
                           ],
                         ),
@@ -287,38 +296,30 @@ class PomoController extends GetxController {
               (e) => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 3),
                 child: GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    //play haptic feedback
+
+                    await HapticFeedback.selectionClick();
                     currPomoTime.value = e;
                     currPomoTimeDup.value = e;
                     animationTarget.value = 1.0;
                   },
                   child: Obx(
-                    () => Container(
-                      height: 35,
-                      width: 70,
-                      decoration: BoxDecoration(
-                        color: currPomoTime.value == e
-                            ? Colors.grey.shade300
-                            : null,
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                          color: currPomoTime.value == e
-                              ? Colors.transparent
-                              : Colors.grey,
-                          width: 1,
-                        ),
+                    () => Chip(
+                      side: BorderSide.none,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+
+                        // side: BorderSide.none,
                       ),
-                      child: Center(
-                        child: Text(
-                          "$e min",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: currPomoTime.value == e
-                                ? Colors.black
-                                : Colors.black,
-                          ),
-                        ),
+                      label: Text(
+                        "$e min",
                       ),
+                      backgroundColor: currPomoTime.value == e
+                          ? Theme.of(Get.context!)
+                              .colorScheme
+                              .secondaryContainer
+                          : null,
                     ),
                   ),
                 ),

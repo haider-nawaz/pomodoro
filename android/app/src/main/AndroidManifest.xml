@@ -6,7 +6,7 @@
     <application
         android:label="Pomodoro"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/twofive">
         <activity
             android:name=".MainActivity"
             android:exported="true"

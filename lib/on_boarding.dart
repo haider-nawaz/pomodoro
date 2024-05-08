@@ -1,6 +1,7 @@
 import 'package:animate_gradient/animate_gradient.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_dnd/flutter_dnd.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
@@ -56,13 +57,13 @@ class _OnBoardingState extends State<OnBoarding> {
         secondaryBegin: Alignment.topCenter,
         secondaryEnd: Alignment.bottomCenter,
         animateAlignments: false,
-        primaryColors: const [
-          Colors.purple,
-          Colors.indigo,
+        primaryColors: [
+          Theme.of(context).colorScheme.primary,
+          Theme.of(context).colorScheme.inversePrimary,
         ],
-        secondaryColors: const [
-          Colors.pink,
-          Colors.blue,
+        secondaryColors: [
+          Theme.of(context).colorScheme.secondary,
+          Theme.of(context).colorScheme.secondaryContainer,
         ],
         child: SafeArea(
           child: Column(
@@ -84,10 +85,10 @@ class _OnBoardingState extends State<OnBoarding> {
                   //   ),
                   // ),
                   Text(
-                    "Pomodoro.",
+                    "Pomodoro",
                     style: titleHeading.copyWith(
                       fontSize: 30,
-                      color: Colors.white.withOpacity(1),
+                      // color: Colors.white.withOpacity(1),
                     ),
                   ),
                   const SizedBox(
@@ -96,13 +97,13 @@ class _OnBoardingState extends State<OnBoarding> {
                   SizedBox(
                     width: 350,
                     child: Text(
-                      'A simple & no B.S. time management technique that uses a timer to break down your work into short intervals',
+                      'A simple & no B.S. time management app that uses a timer to break down your work into short intervals',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         height: 1.3,
                         fontSize: 16,
                         fontFamily: 'Inter',
-                        color: Colors.white.withOpacity(0.6),
+                        // color: Colors.white.withOpacity(0.6),
                       ),
                     ),
                   ),
@@ -116,11 +117,11 @@ class _OnBoardingState extends State<OnBoarding> {
                 margin: const EdgeInsets.only(bottom: 15),
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        Colors.transparent.withOpacity(.2)),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.black.withOpacity(.1)),
                   ),
                   onPressed: () async {
-                    await Haptics.vibrate(HapticsType.soft);
+                    await HapticFeedback.heavyImpact();
                     onDone();
                   },
                   child: Text(
@@ -160,9 +161,8 @@ class _OnBoardingState extends State<OnBoarding> {
       ),
 
       finishButtonStyle: FinishButtonStyle(
-        backgroundColor: !(nameController.text.length >= 3)
-            ? Colors.black
-            : greenColor.withOpacity(0.9),
+        backgroundColor:
+            !(nameController.text.length >= 3) ? Colors.black : Colors.black,
       ),
       onFinish: onDone,
       //skipTextButton: const Text('Skip'),
