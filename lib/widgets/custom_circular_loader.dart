@@ -28,7 +28,9 @@ class _CustomPomoWidgetState extends State<CustomPomoWidget> {
       width: 300,
       child: CircleProgressBar(
         foregroundColor: Colors.blue,
-        backgroundColor: Colors.black12,
+        backgroundColor: Theme.of(context).colorScheme.onSurface,
+        // foregroundColor: Colors.blue,
+        // backgroundColor: Colors.black12,
         value: 0.0,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 0),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 TextStyle titleHeading = const TextStyle(
   fontFamily: "Inter",
@@ -12,7 +13,6 @@ TextStyle titleSubHeading = const TextStyle(
   color: Colors.black,
 );
 
-const Color greenColor = Color(0xff4DDA6E);
 const Color redColor = Color(0xffFF4C4C);
 
 TextStyle clockStyleWhite = const TextStyle(
@@ -21,11 +21,11 @@ TextStyle clockStyleWhite = const TextStyle(
   fontSize: 100,
   color: Colors.white,
 );
-TextStyle clockStyle = const TextStyle(
+TextStyle clockStyle = TextStyle(
   fontFamily: "AlfaSlabOne",
   height: 1,
   fontSize: 100,
-  color: Colors.black,
+  // color: Theme.of(Get.context!).colorScheme.primary,
 );
 TextStyle clockStyleWhiteForText = const TextStyle(
   fontFamily: "AlfaSlabOne",
@@ -44,7 +44,7 @@ TextStyle focusHeading = const TextStyle(
   fontFamily: "Inter",
   fontSize: 24,
   fontWeight: FontWeight.w600,
-  color: Colors.black,
+  // color: Colors.black,
 );
 
 String calculateFocusHoursFromMin(int min) {

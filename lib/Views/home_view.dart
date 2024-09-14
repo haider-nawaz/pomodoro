@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_dnd/flutter_dnd.dart';
 import 'package:get/get.dart';
+import 'package:marquee/marquee.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pomodoro/Views/analytics_view.dart';
 import 'package:pomodoro/Views/pomo_view.dart';
@@ -25,6 +26,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  Color greenColor = Theme.of(Get.context!).colorScheme.tertiaryContainer;
   @override
   void initState() {
     WidgetsBinding.instance
@@ -62,7 +64,7 @@ class _HomeViewState extends State<HomeView> {
                           child: headerWidget(pomoController),
                         ),
                         const SizedBox(
-                          height: 25,
+                          height: 20,
                         ),
                         focusTimesWidget(context, pomoController),
                         const SizedBox(
@@ -105,23 +107,27 @@ class _HomeViewState extends State<HomeView> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(
+              height: 12,
+            ),
             Text(
-              "Hello, ${pomoController.user.username}",
+              "hi ${pomoController.user.username} 👋",
               style: const TextStyle(
                 fontFamily: "Inter",
-                fontSize: 35,
-                fontWeight: FontWeight.bold,
+                fontSize: 32,
+                fontWeight: FontWeight.w800,
               ),
             ).animate().fadeIn().moveX(),
-            Text(
-              "${pomoController.getCurrentDay()} - Get some work done!",
-              style: const TextStyle(
-                fontFamily: "Inter",
-                fontSize: 14,
-                color: Colors.black54,
-                fontWeight: FontWeight.normal,
-              ),
-            ).animate().fadeIn(),
+            // Text(
+            //   // text:
+            //   "It's ${pomoController.getCurrentDay()}, ready to get some work done?",
+            //   style: const TextStyle(
+            //     fontFamily: "Inter",
+            //     fontSize: 14,
+            //     color: Colors.black54,
+            //     fontWeight: FontWeight.normal,
+            //   ),
+            // ),
           ],
         ),
         //const Spacer(),
@@ -139,7 +145,7 @@ class _HomeViewState extends State<HomeView> {
                 height: 50,
                 width: 50,
                 decoration: BoxDecoration(
-                  color: const Color(0xffD9D9D9).withOpacity(.2),
+                  color: Theme.of(Get.context!).highlightColor,
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: Row(
@@ -148,14 +154,14 @@ class _HomeViewState extends State<HomeView> {
                     Text(
                       pomoController.user.longestStreak.toString(),
                       style: const TextStyle(
-                        color: Colors.black,
+                        // color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const Icon(
+                    Icon(
                       CupertinoIcons.flame_fill,
-                      color: Colors.red,
+                      color: Theme.of(Get.context!).colorScheme.secondary,
                       size: 15,
                     ),
                   ],
@@ -178,12 +184,12 @@ class _HomeViewState extends State<HomeView> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Icon(Icons.arrow_back_ios_rounded),
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.8,
+        // const Icon(Icons.arrow_back_ios_rounded),
+        Expanded(
+          // width: MediaQuery.of(context).size.width * .99,
           child: pomoController.buildPomoChips(),
         ),
-        const Icon(Icons.arrow_forward_ios_rounded),
+        // const Icon(Icons.arrow_forward_ios_rounded),
       ],
     );
   }
@@ -225,7 +231,7 @@ class _HomeViewState extends State<HomeView> {
             borderRadius: BorderRadius.circular(50),
             boxShadow: [
               BoxShadow(
-                color: Colors.green.withOpacity(0.4),
+                color: greenColor.withOpacity(0.4),
                 blurRadius: 10,
                 offset: const Offset(0, 0),
               ),
@@ -233,7 +239,7 @@ class _HomeViewState extends State<HomeView> {
         child: const Center(
           child: Icon(
             Icons.play_arrow_rounded,
-            color: Colors.white,
+            // color: Colors.white,
             size: 60,
           ),
         ),
@@ -255,7 +261,6 @@ class _HomeViewState extends State<HomeView> {
                   Container(
                     height: Get.size.height * 0.7,
                     decoration: const BoxDecoration(
-                        color: Colors.white,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(5.0),
                             topRight: Radius.circular(5.0))),
@@ -271,7 +276,11 @@ class _HomeViewState extends State<HomeView> {
                               children: [
                                 Text(
                                   "Focus Chips",
-                                  style: focusHeading,
+                                  style: TextStyle(
+                                    fontFamily: "Inter",
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                                 const SizedBox(
                                   height: 5,
@@ -300,9 +309,7 @@ class _HomeViewState extends State<HomeView> {
         height: 40,
         width: 120,
         decoration: BoxDecoration(
-          color: pomoController
-              .focusChipsTexts[pomoController.currFocusChip.value]![1]
-              .withOpacity(.1),
+          color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(50),
           // border: Border.all(
           //   color: Colors.black,
@@ -319,8 +326,7 @@ class _HomeViewState extends State<HomeView> {
                   Icon(
                     pomoController.focusChipsTexts[
                         pomoController.currFocusChip.value]![0],
-                    color: pomoController.focusChipsTexts[
-                        pomoController.currFocusChip.value]![1],
+                    color: Theme.of(context).colorScheme.onSecondary,
                     size: 20,
                   ),
                   const SizedBox(
@@ -329,8 +335,7 @@ class _HomeViewState extends State<HomeView> {
                   Text(
                     pomoController.currFocusChip.value,
                     style: TextStyle(
-                      color: pomoController.focusChipsTexts[
-                          pomoController.currFocusChip.value]![1],
+                      color: Theme.of(context).colorScheme.onSecondary,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -348,131 +353,138 @@ class _HomeViewState extends State<HomeView> {
       PomoController pomoController) {
     return GestureDetector(
       onTap: () {
-        showCupertinoModalSheet(
-            fullscreenDialog: false,
+        showModalBottomSheet(
+            isScrollControlled: true,
             context: context,
             builder: (context) {
-              FocusScope.of(context).requestFocus(focusNode);
+              // FocusScope.of(context).requestFocus(focusNode);
 
-              return Material(
-                  child: SizedBox(
-                height: 470,
-                child: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Focus Note",
-                                style: focusHeading,
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              const Text(
-                                "Type something that'll keep you motivated.",
-                                // style: focusHeading,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const Divider(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
+              return Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextFormField(
-                              maxLength: 20,
-                              style: const TextStyle(fontSize: 20),
-                              controller:
-                                  pomoController.focusNoteController.value,
-                              autofocus: true,
-                              cursorColor: Colors.black,
-                              decoration: InputDecoration(
-                                // prefixIcon: const Icon(
-                                //   Icons.bolt,
-                                //   // color: Colors.grey,
-                                // ),
-
-                                //border: OutlineInputBorder(),
-                                //fillColor: Colors.white,
-                                filled: false,
-                                //labelStyle: const TextStyle(color: Colors.black45),
-
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(35.0),
-                                  borderSide: const BorderSide(
-                                      //color: Colors.black45,
-                                      ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(35.0),
-                                  borderSide: const BorderSide(
-                                      // color: Colors.black45,
-                                      ),
-                                ),
-                              ),
-                              focusNode: focusNode,
-                              onFieldSubmitted: (value) {
-                                pomoController.focusNoteController.value.text =
-                                    value;
-                              },
-                            ),
+                            Text("Focus Note",
+                                style: TextStyle(
+                                  fontFamily: "Inter",
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w600,
+                                )),
                             const SizedBox(
-                              height: 10,
+                              height: 5,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                FocusScope.of(context).unfocus();
-                                Get.back();
-                              },
-                              child: Container(
-                                height: 50,
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                  color: Colors.blue.withOpacity(.5),
-                                  borderRadius: BorderRadius.circular(50),
-                                  border: Border.all(
-                                    color: Colors.black,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    "Save",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                            const Text(
+                              "Type something that'll keep you motivated.",
+                              // style: focusHeading,
                             ),
                           ],
                         ),
                       ),
-                      Text(
-                        "If you dont want to add a note, just leave it blank.",
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 14,
-                          fontFamily: 'Inter',
-                        ),
-                      )
-                    ],
-                  ),
+                    ),
+                    const Divider(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            maxLength: 20,
+                            style: const TextStyle(fontSize: 20),
+                            controller:
+                                pomoController.focusNoteController.value,
+                            autofocus: true,
+                            decoration: InputDecoration(
+                              // prefixIcon: const Icon(
+                              //   Icons.bolt,
+                              //   // color: Colors.grey,
+                              // ),
+
+                              //border: OutlineInputBorder(),
+                              //fillColor: Colors.white,
+                              filled: false,
+                              //labelStyle: const TextStyle(color: Colors.black45),
+
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(35.0),
+                                borderSide: const BorderSide(
+                                    //color: Colors.black45,
+                                    ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(35.0),
+                                borderSide: const BorderSide(
+                                    // color: Colors.black45,
+                                    ),
+                              ),
+                            ),
+                            focusNode: focusNode,
+                            onFieldSubmitted: (value) {
+                              pomoController.focusNoteController.value.text =
+                                  value;
+                            },
+                            onChanged: (value) {
+                              pomoController.focusNoteController.value.text =
+                                  value;
+                            },
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              FocusScope.of(context).unfocus();
+                              Get.back();
+                              setState(() {});
+                            },
+                            child: Container(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryContainer,
+                                borderRadius: BorderRadius.circular(50),
+                                // border: Border.all(
+                                //   color: Colors.black,
+                                //   width: 1,
+                                // ),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  "Save",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text(
+                      "If you dont want to add a note, just leave it blank.",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
                 ),
-              ));
+              );
             });
       },
       child: Container(
@@ -482,19 +494,20 @@ class _HomeViewState extends State<HomeView> {
         height: Get.size.height * 0.09,
         width: 210,
         decoration: BoxDecoration(
-            color: Colors.white.withOpacity(.5),
-            borderRadius: BorderRadius.circular(50),
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Colors.grey.withOpacity(.5),
-            //     blurRadius: 10,
-            //     offset: const Offset(0, 0),
-            //   ),
-            // ],
-            border: Border.all(
-              color: Colors.black,
-              width: 1,
-            )),
+          color: Theme.of(Get.context!).highlightColor,
+          borderRadius: BorderRadius.circular(50),
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.grey.withOpacity(.5),
+          //     blurRadius: 10,
+          //     offset: const Offset(0, 0),
+          //   ),
+          // ],
+          // border: Border.all(
+          //   color: Colors.black,
+          //   width: 1,
+          // ),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -503,19 +516,20 @@ class _HomeViewState extends State<HomeView> {
               Obx(
                 () => Text(
                   pomoController.focusNoteController.value.text.toString(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: "Inter",
-                    color: Colors.black,
                     fontSize: 18,
+                    // color:
+                    //     Theme.of(Get.context!).colorScheme.onSecondaryContainer,
                   ),
                 ),
               ),
               const SizedBox(
                 width: 10,
               ),
-              const Icon(
+              Icon(
                 Icons.edit,
-                color: Colors.black,
+                // color: Theme.of(Get.context!).colorScheme.onSecondaryContainer,
                 size: 20,
               ),
             ],
@@ -630,7 +644,7 @@ class _HomeViewState extends State<HomeView> {
                                 style: TextStyle(
                                   fontFamily: "Inter",
                                   fontSize: 14,
-                                  color: Colors.black54,
+                                  // color: Colors.black54,
                                   fontWeight: FontWeight.normal,
                                 ),
                               ),
@@ -659,7 +673,7 @@ class _HomeViewState extends State<HomeView> {
                                   color: Colors.blue.withOpacity(.5),
                                   borderRadius: BorderRadius.circular(50),
                                   border: Border.all(
-                                    color: Colors.black,
+                                    // color: Colors.black,
                                     width: 1,
                                   ),
                                 ),
@@ -667,7 +681,7 @@ class _HomeViewState extends State<HomeView> {
                                   child: Text(
                                     "Allow",
                                     style: TextStyle(
-                                      color: Colors.black,
+                                      // color: Colors.black,
                                       fontSize: 20,
                                     ),
                                   ),
@@ -688,7 +702,7 @@ class _HomeViewState extends State<HomeView> {
                                   color: Colors.pink.withOpacity(.8),
                                   borderRadius: BorderRadius.circular(50),
                                   border: Border.all(
-                                    color: Colors.black,
+                                    // color: Colors.black,
                                     width: 1,
                                   ),
                                 ),
@@ -696,7 +710,7 @@ class _HomeViewState extends State<HomeView> {
                                   child: Text(
                                     "Don't Allow",
                                     style: TextStyle(
-                                      color: Colors.black,
+                                      // color: Colors.black,
                                       fontSize: 20,
                                     ),
                                   ),
@@ -748,7 +762,7 @@ class _HomeViewState extends State<HomeView> {
                               style: TextStyle(
                                 fontFamily: "Inter",
                                 fontSize: 14,
-                                color: Colors.black54,
+                                // color: Colors.black54,
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
@@ -773,10 +787,10 @@ class _HomeViewState extends State<HomeView> {
                               height: 50,
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
-                                color: Colors.blue.withOpacity(.5),
+                                color: Theme.of(context).colorScheme.tertiary,
                                 borderRadius: BorderRadius.circular(50),
                                 border: Border.all(
-                                  color: Colors.black,
+                                  // color: Colors.black,
                                   width: 1,
                                 ),
                               ),
@@ -784,7 +798,7 @@ class _HomeViewState extends State<HomeView> {
                                 child: Text(
                                   "Allow",
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    // color: Colors.black,
                                     fontSize: 20,
                                   ),
                                 ),

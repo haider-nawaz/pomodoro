@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -14,7 +15,7 @@ import 'Models/user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  AwesomeNotifications().initialize("resource://drawable/logo", [
+  AwesomeNotifications().initialize(null, [
     // notification icon
     NotificationChannel(
       channelGroupKey: 'basic_test',
@@ -48,6 +49,17 @@ void main() async {
 
   if (box.isEmpty) {
     print("No user");
+    // box.put(
+    //     'user',
+    //     User(
+    //       username: "User",
+    //       firstTimeUser: true,
+    //       totalPomos: 0,
+    //       todaysPomos: 0,
+    //       todayFocusHours: 0,
+    //       netFocusHours: 0,
+    //       longestStreak: 0,
+    //     ));
   } else {
     print(box.get('user'));
   }
@@ -104,6 +116,13 @@ List<FocusSession> generateSampleFocusSessions() {
   return sessions;
 }
 
+bool _isDemoUsingDynamicColors = false;
+CustomColors lightCustomColors = const CustomColors(danger: Color(0xFFE53935));
+CustomColors darkCustomColors = const CustomColors(danger: Color(0xFFEF9A9A));
+
+// Fictitious brand color.
+const _brandBlue = Color(0xFF1E88E5);
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -111,18 +130,84 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final box = Hive.box<User>('User');
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      useInheritedMediaQuery: true,
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
-      title: 'Pomodoro App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
-        useMaterial3: true,
-      ),
-      home: box.isEmpty ? const OnBoarding() : const HomeView(),
-      //home: OnBoarding(),
+    return DynamicColorBuilder(
+        builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+      ColorScheme lightColorScheme;
+      ColorScheme darkColorScheme;
+
+      if (lightDynamic != null && darkDynamic != null) {
+        // On Android S+ devices, use the provided dynamic color scheme.
+        // (Recommended) Harmonize the dynamic color scheme' built-in semantic colors.
+        lightColorScheme = lightDynamic.harmonized();
+        // (Optional) Customize the scheme as desired. For example, one might
+        // want to use a brand color to override the dynamic [ColorScheme.secondary].
+        lightColorScheme = lightColorScheme.copyWith(secondary: _brandBlue);
+        // (Optional) If applicable, harmonize custom colors.
+        lightCustomColors = lightCustomColors.harmonized(lightColorScheme);
+
+        // Repeat for the dark color scheme.
+        darkColorScheme = darkDynamic.harmonized();
+        darkColorScheme = darkColorScheme.copyWith(secondary: _brandBlue);
+        darkCustomColors = darkCustomColors.harmonized(darkColorScheme);
+
+        _isDemoUsingDynamicColors = true; // ignore, only for demo purposes
+      } else {
+        // Otherwise, use fallback schemes.
+        lightColorScheme = ColorScheme.fromSeed(
+          seedColor: _brandBlue,
+        );
+        darkColorScheme = ColorScheme.fromSeed(
+          seedColor: _brandBlue,
+          brightness: Brightness.dark,
+        );
+      }
+      return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        useInheritedMediaQuery: true,
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        title: 'Pomodoro App',
+        theme: ThemeData(
+          colorScheme: lightDynamic ?? lightColorScheme,
+        ),
+        darkTheme: ThemeData(
+          colorScheme: darkDynamic ?? darkColorScheme,
+          brightness: Brightness.dark,
+        ),
+        home: box.isEmpty ? const OnBoarding() : const HomeView(),
+
+        //home: OnBoarding(),
+      );
+    });
+  }
+}
+
+@immutable
+class CustomColors extends ThemeExtension<CustomColors> {
+  const CustomColors({
+    required this.danger,
+  });
+
+  final Color? danger;
+
+  @override
+  CustomColors copyWith({Color? danger}) {
+    return CustomColors(
+      danger: danger ?? this.danger,
     );
+  }
+
+  @override
+  CustomColors lerp(ThemeExtension<CustomColors>? other, double t) {
+    if (other is! CustomColors) {
+      return this;
+    }
+    return CustomColors(
+      danger: Color.lerp(danger, other.danger, t),
+    );
+  }
+
+  CustomColors harmonized(ColorScheme dynamic) {
+    return copyWith(danger: danger!.harmonizeWith(dynamic.primary));
   }
 }

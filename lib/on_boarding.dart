@@ -1,9 +1,12 @@
+import 'package:animate_gradient/animate_gradient.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_dnd/flutter_dnd.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 import 'package:get/get.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pomodoro/constants.dart';
 
@@ -21,11 +24,10 @@ class _OnBoardingState extends State<OnBoarding> {
   final nameController = TextEditingController();
 
   onDone() {
-    if (nameController.text.length < 3) return;
     Hive.box<User>('User').put(
       'user',
       User(
-        username: nameController.text,
+        username: "there",
         firstTimeUser: false,
         totalPomos: 0,
         todaysPomos: 0,
@@ -46,7 +48,102 @@ class _OnBoardingState extends State<OnBoarding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: OnBoardingSlider(
+        body: SizedBox(
+      height: double.infinity,
+      width: double.infinity,
+      child: AnimateGradient(
+        primaryBegin: Alignment.bottomCenter,
+        primaryEnd: Alignment.topCenter,
+        secondaryBegin: Alignment.topCenter,
+        secondaryEnd: Alignment.bottomCenter,
+        animateAlignments: false,
+        primaryColors: [
+          Theme.of(context).colorScheme.primary,
+          Theme.of(context).colorScheme.inversePrimary,
+        ],
+        secondaryColors: [
+          Theme.of(context).colorScheme.secondary,
+          Theme.of(context).colorScheme.secondaryContainer,
+        ],
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const SizedBox(
+                height: 40,
+              ),
+              Column(
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Text(
+                  //   "No B.S.",
+                  //   style: TextStyle(
+                  //     height: 1.3,
+                  //     fontSize: 12,
+                  //     fontFamily: 'Inter',
+                  //     color: Colors.white.withOpacity(1),
+                  //   ),
+                  // ),
+                  Text(
+                    "Pomodoro",
+                    style: titleHeading.copyWith(
+                      fontSize: 30,
+                      // color: Colors.white.withOpacity(1),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: 350,
+                    child: Text(
+                      'A simple & no B.S. time management app that uses a timer to break down your work into short intervals',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        height: 1.3,
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        // color: Colors.white.withOpacity(0.6),
+                      ),
+                    ),
+                  ),
+
+                  //a transparent button
+                ],
+              ),
+              Container(
+                width: 200,
+                height: 50,
+                margin: const EdgeInsets.only(bottom: 15),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.black.withOpacity(.1)),
+                  ),
+                  onPressed: () async {
+                    await HapticFeedback.heavyImpact();
+                    onDone();
+                  },
+                  child: Text(
+                    "Let's Go",
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    ));
+  }
+
+  OnBoardingSlider customOnBoardSlider(BuildContext context) {
+    return OnBoardingSlider(
       controllerColor: Colors.black,
 
       addController: false,
@@ -64,9 +161,8 @@ class _OnBoardingState extends State<OnBoarding> {
       ),
 
       finishButtonStyle: FinishButtonStyle(
-        backgroundColor: !(nameController.text.length >= 3)
-            ? Colors.black
-            : greenColor.withOpacity(0.9),
+        backgroundColor:
+            !(nameController.text.length >= 3) ? Colors.black : Colors.black,
       ),
       onFinish: onDone,
       //skipTextButton: const Text('Skip'),
@@ -440,6 +536,6 @@ class _OnBoardingState extends State<OnBoarding> {
           ),
         ),
       ],
-    ));
+    );
   }
 }

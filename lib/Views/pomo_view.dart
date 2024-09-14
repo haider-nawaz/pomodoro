@@ -118,7 +118,7 @@ class _PomoViewState extends State<PomoView> with WidgetsBindingObserver {
                 Container(
                   height: 40,
                   width: MediaQuery.of(context).size.width,
-                  color: const Color(0xffD9D9D9),
+                  color: Theme.of(context).colorScheme.secondaryContainer,
                   child: Marquee(
                     text: pomoController.focusNoteController.value.text
                         .toString(),
@@ -126,7 +126,6 @@ class _PomoViewState extends State<PomoView> with WidgetsBindingObserver {
                       fontFamily: "Inter",
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: Colors.black,
                     ),
                     scrollAxis: Axis.horizontal,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -142,9 +141,7 @@ class _PomoViewState extends State<PomoView> with WidgetsBindingObserver {
                 height: 40,
                 width: 120,
                 decoration: BoxDecoration(
-                  color: pomoController
-                      .focusChipsTexts[pomoController.currFocusChip.value]![1]
-                      .withOpacity(.1),
+                  color: Theme.of(context).colorScheme.secondaryContainer,
                   borderRadius: BorderRadius.circular(50),
                   // border: Border.all(
                   //   color: Colors.black,
@@ -161,8 +158,9 @@ class _PomoViewState extends State<PomoView> with WidgetsBindingObserver {
                           Icon(
                             pomoController.focusChipsTexts[
                                 pomoController.currFocusChip.value]![0],
-                            color: pomoController.focusChipsTexts[
-                                pomoController.currFocusChip.value]![1],
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSecondaryContainer,
                             size: 20,
                           ),
                           const SizedBox(
@@ -171,8 +169,9 @@ class _PomoViewState extends State<PomoView> with WidgetsBindingObserver {
                           Text(
                             pomoController.currFocusChip.value,
                             style: TextStyle(
-                              color: pomoController.focusChipsTexts[
-                                  pomoController.currFocusChip.value]![1],
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSecondaryContainer,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
@@ -207,7 +206,7 @@ class _PomoViewState extends State<PomoView> with WidgetsBindingObserver {
                                         fontFamily: "Inter",
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.black,
+                                        // color: Colors.black,
                                       )),
                                   Icon(
                                     CupertinoIcons.flame_fill,
@@ -220,7 +219,7 @@ class _PomoViewState extends State<PomoView> with WidgetsBindingObserver {
                                     const EdgeInsets.symmetric(horizontal: 5),
                                 child: const Icon(
                                   Icons.circle,
-                                  color: Colors.black,
+                                  // color: Colors.black,
                                   size: 5,
                                 ),
                               ),
@@ -232,7 +231,7 @@ class _PomoViewState extends State<PomoView> with WidgetsBindingObserver {
                                     fontFamily: "Inter",
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.black54,
+                                    // color: Colors.black54,
                                   ),
                                 ),
                               ),
@@ -314,8 +313,6 @@ class _PomoViewState extends State<PomoView> with WidgetsBindingObserver {
                                 AlertDialog(
                                   title: const Text(
                                       "Are you sure you want to quit?"),
-                                  backgroundColor: Colors.white,
-                                  surfaceTintColor: Colors.white,
                                   content: Text(
                                       "You have completed ${pomoController.sessionMinutes.value} minutes of your Focus Session."),
                                   actions: [
@@ -323,36 +320,37 @@ class _PomoViewState extends State<PomoView> with WidgetsBindingObserver {
                                       onPressed: () {
                                         Get.back();
                                       },
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.white),
+                                      // style: ButtonStyle(
+                                      //   backgroundColor:
+                                      //       MaterialStateProperty.all(
+                                      //           Colors.white),
 
-                                        //giver border color of red
+                                      //   //giver border color of red
 
-                                        side: MaterialStateProperty.all(
-                                          const BorderSide(
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                      ),
+                                      //   side: MaterialStateProperty.all(
+                                      //     const BorderSide(
+                                      //       color: Colors.red,
+                                      //     ),
+                                      //   ),
+
                                       child: const Text(
                                         "Cancel",
-                                        style: TextStyle(color: Colors.red),
+                                        // style: TextStyle(color: Colors.red),
                                       ),
                                     ),
                                     TextButton(
                                       onPressed: () {
                                         pomoController.endPomo(false);
                                       },
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.red),
+                                      // style: ButtonStyle(
+                                      //   backgroundColor:
+                                      //       MaterialStateProperty.all(
+                                      //           Colors.red),
+                                      // ),
+                                      child: const Text(
+                                        "Quit",
+                                        // style: TextStyle(color: Colors.white),
                                       ),
-                                      child: const Text("Quit",
-                                          style:
-                                              TextStyle(color: Colors.white)),
                                     ),
                                   ],
                                 ),
@@ -397,8 +395,12 @@ class _PomoViewState extends State<PomoView> with WidgetsBindingObserver {
       width: 300,
       child: Obx(
         () => CircleProgressBar(
-          foregroundColor: greenColor,
-          backgroundColor: const Color(0xffD9D9D9),
+          foregroundColor:
+              Theme.of(Get.context!).colorScheme.secondaryContainer,
+          backgroundColor: Theme.of(Get.context!)
+              .colorScheme
+              .secondaryContainer
+              .withOpacity(.2),
 
           //the stroke width would depend on the number of streaks
           //if streak is 0, then stroke width is default and would increase by 1 for every 1 streak
