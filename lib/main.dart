@@ -174,7 +174,7 @@ class MyApp extends StatelessWidget {
           colorScheme: darkDynamic ?? darkColorScheme,
           brightness: Brightness.dark,
         ),
-        home: box.isEmpty ? const OnBoarding() : const OnBoarding(),
+        home: box.isEmpty ? const OnBoarding() : const HomeView(),
 
         //home: OnBoarding(),
       );

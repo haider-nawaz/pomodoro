@@ -111,7 +111,7 @@ class _HomeViewState extends State<HomeView> {
               height: 12,
             ),
             Text(
-              "hello, ${pomoController.user.username} 👋",
+              "hi ${pomoController.user.username} 👋",
               style: const TextStyle(
                 fontFamily: "Inter",
                 fontSize: 32,

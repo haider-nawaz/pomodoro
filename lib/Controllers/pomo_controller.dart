@@ -170,19 +170,8 @@ class PomoController extends GetxController {
     print("$totalFocusHours h $totalFocusMinutes m");
   }
 
-  final pomoTimesList = <String>[
-    "2",
-    "15",
-    "20",
-    "25",
-    "30",
-    "35",
-    "40",
-    "45",
-    "50",
-    "55",
-    "60"
-  ].obs;
+  final pomoTimesList =
+      <String>["15", "20", "25", "30", "35", "40", "45", "50", "55", "60"].obs;
 
   //a list of focus chips that will hold the text and icon and a color for each chip
   final focusChipsTexts = <String, List>{

@@ -2,7 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 import '../Controllers/pomo_controller.dart';
 import '../constants.dart';
@@ -320,7 +319,6 @@ class _AnalyticsViewState extends State<AnalyticsView> {
   BarTouchData get barTouchData => BarTouchData(
         enabled: false,
         touchTooltipData: BarTouchTooltipData(
-          tooltipBgColor: Colors.transparent,
           tooltipPadding: EdgeInsets.zero,
           tooltipMargin: 10,
           getTooltipItem: (
