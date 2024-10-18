@@ -26,7 +26,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  Color greenColor = Theme.of(Get.context!).colorScheme.tertiaryContainer;
+  Color greenColor = Theme.of(Get.context!).colorScheme.secondary;
   @override
   void initState() {
     WidgetsBinding.instance
